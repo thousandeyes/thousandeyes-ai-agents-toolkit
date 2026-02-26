@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": {
     "name": "ThousandEyes",
-    "email": "support@thousandeyes.com",
+    "email": "support@thousandeyes.com"
   },
   "keywords": ["cursor", "plugin", "mcp", "thousandeyes", "networking", "observability"],
   "logo": "assets/logo.png"

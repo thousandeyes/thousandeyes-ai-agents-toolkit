@@ -12,29 +12,32 @@ Agent guidance for working in this repository.
 
 - This repository is for one plugin only.
 - The canonical manifest is `.cursor-plugin/plugin.json` at repository root.
-- Keep `name`, `displayName`, `description`, `author`, and `version` accurate when editing plugin metadata.
+- The only **required** manifest field is `name` (lowercase, kebab-case, alphanumerics/hyphens/periods; must start and end with alphanumeric).
+- Keep optional metadata accurate when editing: `description`, `version`, `author` (`name` required, `email` optional), `keywords`, `logo`, etc. See [Building plugins](https://cursor.com/docs/plugins/building).
 
 ## Supported plugin components
 
 Add only components that are needed:
 
-- `rules/` with `.mdc` files (YAML frontmatter required)
-- `skills/<skill-name>/SKILL.md` (YAML frontmatter required)
-- `agents/*.md` (YAML frontmatter required)
-- `commands/*.(md|mdc|markdown|txt)` (frontmatter recommended)
+- `rules/` — `.md`, `.mdc`, or `.markdown` files (YAML frontmatter required, e.g. `description`, `alwaysApply`, `globs`)
+- `skills/<skill-name>/SKILL.md` (YAML frontmatter required: `name`, `description`)
+- `agents/*.md` (YAML frontmatter required: `name`, `description`)
+- `commands/` — `.md`, `.mdc`, `.markdown`, or `.txt` (frontmatter recommended: `name`, `description`)
 - `hooks/hooks.json` and `scripts/*` for hook automation
-- `mcp.json` for MCP server definitions
-- `assets/logo.svg` or another manifest-referenced logo asset
+- `.mcp.json` at plugin root for MCP server definitions (or use manifest `mcpServers` for custom path/inline config)
+- `assets/logo.svg` or another manifest-referenced logo (prefer committing the logo and using a relative path)
+
+If the manifest specifies paths for a component type (e.g. `"rules": "./my-rules/"`), that **replaces** folder-based discovery for that type; default folders are not also scanned.
 
 ## Validation and pitfalls checklist
 
 Before finishing plugin work, verify all of the following:
 
 1. `.cursor-plugin/plugin.json` exists at repository root and is valid JSON.
-2. Plugin `name` is lowercase kebab-case and metadata (`displayName`, `description`, `author`, `version`) is accurate.
-3. Manifest-referenced paths (for example `logo`, hooks, and MCP config files) resolve correctly.
-4. Required frontmatter fields (`name`, `description`) are present in rule/skill/agent/command files where required.
-5. Logo/image assets referenced by manifests are committed and use correct relative paths.
+2. Plugin `name` is lowercase kebab-case; optional metadata (`description`, `author`, `version`, etc.) is accurate.
+3. All manifest paths are **relative** (no `..`, no absolute paths) and resolve correctly (e.g. `logo`, `hooks`, MCP config).
+4. Required frontmatter fields (`name`, `description` where applicable) are present in rule/skill/agent/command files.
+5. Logo and other assets referenced by the manifest are committed and use correct relative paths.
 6. Docs and examples match the current file layout and filenames.
 
 ## Safety and quality expectations
