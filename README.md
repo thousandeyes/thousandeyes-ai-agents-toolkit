@@ -1,7 +1,8 @@
-# thousandeyes-cursor-plugin
+# ThousandEyes Cursor Plugin
 
-## Owners: api-team-current
+This repository contains the official ThousandEyes plugin for Cursor.
 
-## Description
+## ThousandEyes MCP Server documentation
 
-ThousandEyes Plugin for Cursor
+For setup guidance, prerequisites, and available MCP tools, see:
+- https://docs.thousandeyes.com/product-documentation/integration-guides/thousandeyes-mcp-server

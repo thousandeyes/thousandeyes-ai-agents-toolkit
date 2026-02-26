@@ -1,0 +1,13 @@
+{
+  "name": "thousandeyes",
+  "displayName": "ThousandEyes",
+  "version": "1.0.0",
+  "description": "Connect Cursor to ThousandEyes MCP endpoints for network intelligence workflows.",
+  "author": {
+    "name": "ThousandEyes",
+    "email": "support@thousandeyes.com",
+    "url": "https://www.thousandeyes.com"
+  },
+  "keywords": ["cursor", "plugin", "mcp", "thousandeyes", "networking", "observability"],
+  "logo": "assets/logo.png"
+}
