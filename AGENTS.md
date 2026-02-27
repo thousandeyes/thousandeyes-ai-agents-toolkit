@@ -4,18 +4,24 @@ Agent guidance for working in this repository.
 
 ## Scope and intent
 
-- This repo contains the official ThousandEyes Cursor plugin.
+- This repo contains the ThousandEyes AI Agents Toolkit.
+- The toolkit can include multiple integrations (for example Cursor plugin assets, MCP configuration, and future agent/tooling integrations).
 - Make minimal, targeted edits that match the user request.
 - Do not refactor unrelated files or reorganize directories unless requested.
 
-## Single-plugin repository
+## Repository structure guidance
 
-- This repository is for one plugin only.
-- The canonical manifest is `.cursor-plugin/plugin.json` at repository root.
+- Keep integration boundaries clear (plugin files, docs, scripts, assets) and avoid cross-cutting changes unless requested.
+- Prefer adding new integration-specific content in clearly named folders/files.
+- Keep documentation aligned with the actual repository layout and supported integrations.
+
+## Cursor plugin-specific guidance
+
+- The Cursor plugin manifest is `.cursor-plugin/plugin.json` at repository root.
 - The only **required** manifest field is `name` (lowercase, kebab-case, alphanumerics/hyphens/periods; must start and end with alphanumeric).
 - Keep optional metadata accurate when editing: `description`, `version`, `author` (`name` required, `email` optional), `keywords`, `logo`, etc. See [Building plugins](https://cursor.com/docs/plugins/building).
 
-## Supported plugin components
+### Supported components
 
 Add only components that are needed:
 
@@ -29,7 +35,7 @@ Add only components that are needed:
 
 If the manifest specifies paths for a component type (e.g. `"rules": "./my-rules/"`), that **replaces** folder-based discovery for that type; default folders are not also scanned.
 
-## Validation and pitfalls checklist
+### Validation and pitfalls checklist (when editing plugin assets)
 
 Before finishing plugin work, verify all of the following:
 
@@ -43,6 +49,6 @@ Before finishing plugin work, verify all of the following:
 ## Safety and quality expectations
 
 - Never hardcode secrets or tokens in manifests, docs, scripts, or examples.
-- Prefer environment variable placeholders for credentials (for example `${THOUSANDEYES_AUTHORIZATION}`).
+- Prefer environment variable placeholders for credentials
 - Preserve user changes in unrelated files; do not revert work you did not make.
 
