@@ -28,6 +28,10 @@ As an alternative to configuring the ThousandEyes MCP Server directly in Cursor,
 
 For more details on plugin installation and management, see: https://cursor.com/docs/plugins
 
+## Support
+
+For bug reports, feature requests, or questions about this toolkit, please contact [ThousandEyes Support](https://docs.thousandeyes.com/product-documentation/getting-started/getting-support-from-thousandeyes#contacting-support).
+
 ## ThousandEyes MCP Server documentation
 
 For setup guidance, prerequisites, and available MCP tools, see: https://docs.thousandeyes.com/product-documentation/integration-guides/thousandeyes-mcp-server.
