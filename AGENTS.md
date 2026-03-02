@@ -5,7 +5,7 @@ Agent guidance for working in this repository.
 ## Scope and intent
 
 - This repo contains the ThousandEyes AI Agents Toolkit.
-- The toolkit can include multiple integrations (for example Cursor plugin assets, MCP configuration, and future agent/tooling integrations).
+- The toolkit can include multiple integrations (for example Cursor plugin assets, Claude Code plugin assets, MCP configuration, and future agent/tooling integrations).
 - Make minimal, targeted edits that match the user request.
 - Do not refactor unrelated files or reorganize directories unless requested.
 
@@ -45,6 +45,28 @@ Before finishing plugin work, verify all of the following:
 4. Required frontmatter fields (`name`, `description` where applicable) are present in rule/skill/agent/command files.
 5. Logo and other assets referenced by the manifest are committed and use correct relative paths.
 6. Docs and examples match the current file layout and filenames.
+
+## Claude Code plugin-specific guidance
+
+- The Claude Code plugin manifest is `.claude-plugin/plugin.json` at repository root.
+- The only **required** manifest field is `name` (kebab-case, no spaces).
+- Keep optional metadata accurate when editing: `description`, `version`, `author` (`name` required, `email` optional), `keywords`, `homepage`, `repository`, `license`. See [Plugins reference](https://code.claude.com/docs/en/plugins-reference).
+
+### Supported components
+
+The Claude Code plugin in this repo provides **MCP server integration only**. Do not add skills, agents, hooks, commands, or LSP servers unless explicitly requested.
+
+- `.mcp.json` at plugin root for MCP server definitions (shared with the Cursor plugin).
+
+### Validation and pitfalls checklist (when editing Claude Code plugin assets)
+
+Before finishing plugin work, verify all of the following:
+
+1. `.claude-plugin/plugin.json` exists at repository root and is valid JSON.
+2. Plugin `name` is lowercase kebab-case; optional metadata (`description`, `author`, `version`, etc.) is accurate.
+3. All manifest paths are **relative** (start with `./`, no `..`, no absolute paths) and resolve correctly.
+4. `.mcp.json` at the plugin root is valid JSON and contains correct MCP server definitions.
+5. Docs and examples match the current file layout and filenames.
 
 ## Safety and quality expectations
 
