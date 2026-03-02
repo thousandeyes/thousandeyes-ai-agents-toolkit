@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: ThousandEyes Support
+    url: https://docs.thousandeyes.com/product-documentation/getting-started/getting-support-from-thousandeyes#contacting-support
+    about: For bug reports, feature requests, or questions about this toolkit, please contact ThousandEyes Support.
+  - name: Security Vulnerability
+    url: https://github.com/thousandeyes/thousandeyes-ai-agents-toolkit/blob/main/SECURITY.md
+    about: Please report security vulnerabilities via the process described in SECURITY.md.
