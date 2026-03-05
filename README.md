@@ -55,4 +55,4 @@ For bug reports, feature requests, or questions about this toolkit, please conta
 
 ## ThousandEyes MCP Server documentation
 
-For setup guidance, prerequisites, and available MCP tools, see: https://docs.thousandeyes.com/product-documentation/integration-guides/thousandeyes-mcp-server.
+For setup guidance, prerequisites, and available MCP tools, see: https://docs.thousandeyes.com/product-documentation/integration-guides/thousandeyes-mcp-server

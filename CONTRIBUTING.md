@@ -11,12 +11,8 @@ requests. This document describes how to participate.
 
 ## Getting Started
 
-1. Fork the repository.
-2. Clone your fork locally.
-3. Create a feature branch from `main` (`git checkout -b my-new-feature`).
-4. Make your changes and commit them (`git commit -am 'Add some feature'`).
-5. Push to the branch (`git push origin my-new-feature`).
-6. Open a pull request against the `main` branch of this repository.
+Follow GitHub's official guide for contributing to a project from a fork:
+[Contributing to a project](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project).
 
 ## How to Report a Bug
 
