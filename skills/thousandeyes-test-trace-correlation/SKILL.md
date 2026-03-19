@@ -1,8 +1,8 @@
 ---
-name: thousandeyes-test-debug
+name: thousandeyes-test-trace-correlation
 description: Investigate failing ThousandEyes synthetic tests with MCP tools. Use when a user wants ThousandEyes test triage, service-map or trace-ID correlation, distributed-tracing checks, backend-agnostic observability correlation, or evidence-backed root-cause analysis with optional code fixes.
 ---
-# ThousandEyes Test Debug
+# ThousandEyes Test Trace Correlation
 
 Use this skill to diagnose a failing ThousandEyes synthetic test end-to-end. Prefer evidence from ThousandEyes first, then correlate into observability backends. Only edit code after explicit user approval.
 
