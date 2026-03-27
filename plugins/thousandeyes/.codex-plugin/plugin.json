@@ -1,0 +1,40 @@
+{
+  "name": "thousandeyes",
+  "version": "1.0.0",
+  "description": "Connect Codex to the ThousandEyes MCP server for network intelligence workflows.",
+  "author": {
+    "name": "ThousandEyes",
+    "email": "support@thousandeyes.com",
+    "url": "https://www.thousandeyes.com"
+  },
+  "homepage": "https://docs.thousandeyes.com/product-documentation/integration-guides/thousandeyes-mcp-server",
+  "repository": "https://github.com/thousandeyes/thousandeyes-ai-agents-toolkit",
+  "license": "Apache-2.0",
+  "keywords": [
+    "codex",
+    "plugin",
+    "mcp",
+    "thousandeyes",
+    "networking",
+    "observability"
+  ],
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "ThousandEyes",
+    "shortDescription": "Network intelligence tools for Codex.",
+    "longDescription": "Use ThousandEyes network intelligence workflows in Codex through the hosted ThousandEyes MCP server.",
+    "developerName": "ThousandEyes",
+    "category": "Productivity",
+    "capabilities": [
+      "Interactive"
+    ],
+    "websiteURL": "https://www.thousandeyes.com",
+    "defaultPrompt": [
+      "Compare current internet performance for Salesforce between our London and Tokyo offices.",
+      "Run an HTTP test to https://www.okta.com from our Seattle and San Francisco agents.",
+      "Troubleshoot this morning's Microsoft 365 slowdown and suggest the probable fault domain."
+    ],
+    "brandColor": "#fb7c32",
+    "logo": "./assets/logo.svg"
+  }
+}

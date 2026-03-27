@@ -5,8 +5,8 @@
   "author": {
     "name": "ThousandEyes",
     "email": "support@thousandeyes.com",
-    "url": "https://thousandeyes.com"
+    "url": "https://www.thousandeyes.com"
   },
-  "homepage": "https://thousandeyes.com",
+  "homepage": "https://www.thousandeyes.com",
   "keywords": ["claude-code", "plugin", "mcp", "thousandeyes", "networking", "observability"]
 }
