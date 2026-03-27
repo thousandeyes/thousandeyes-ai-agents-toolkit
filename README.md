@@ -2,6 +2,12 @@
 
 This repository contains the ThousandEyes AI Agents Toolkit: a growing collection of integrations that connect ThousandEyes with LLM-powered developer tools and AI agents.
 
+## Available Skills
+
+| Skill | Description |
+| --- | --- |
+| [thousandeyes-test-trace-correlation](skills/thousandeyes-test-trace-correlation/SKILL.md) | Investigate failing ThousandEyes synthetic tests with MCP tools. Use when a user wants ThousandEyes test triage, service-map or trace-ID correlation, distributed-tracing checks, correlation across Observability Platforms, or evidence-backed root-cause analysis with optional code fixes. |
+
 ## What is included
 
 ### ThousandEyes Codex Plugin

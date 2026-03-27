@@ -11,10 +11,9 @@
 - HTTP tracing: distributedTracing `<true|false>`
 - Service map: `<available|unavailable>`; failing service(s): `<list or n/a>`
 - Trace correlation: traceId `<id or unavailable>`
-- Backend coverage:
-  - `<backend1>`: `<hit|miss|blocked>`; trace lookup `<yes/no>`; telemetry `<trace/logs/metrics/events/incidents/topology>`
-  - `<backend2>`: `<hit|miss|blocked>`; trace lookup `<yes/no>`; telemetry `<trace/logs/metrics/events/incidents/topology>`
-- Confidence: `<high|medium|low>`
+- Observability Platform coverage:
+  - `<observability-platform-1>`: `<hit|miss|blocked>`; trace lookup `<yes/no>`; telemetry `<trace/logs/metrics/events/incidents/topology>`
+  - `<observability-platform-2>`: `<hit|miss|blocked>`; trace lookup `<yes/no>`; telemetry `<trace/logs/metrics/events/incidents/topology>`
 
 ### Root cause
 <clear statement with evidence>
@@ -31,8 +30,7 @@
 
 - Test: <name> (`<testId>`, `<type>`)
 - Root cause: <statement>
-- Confidence: <high|medium|low>
-- Backend coverage: `<all backend summaries>`
+- Observability Platform coverage: `<all Observability Platform summaries>`
 
 ### Implemented change
 - Files: `<path1>`, `<path2>`
@@ -55,9 +53,9 @@
 - Recovered traceId: `<trace_id>`
 - Correlation window: `<earliest>` to `<latest>`
 
-### Cross-backend findings
-- `<backend1>`: `<hit|miss|blocked>`; trace lookup `<yes/no>`; service(s) `<list or n/a>`; error `<message/code or n/a>`
-- `<backend2>`: `<hit|miss|blocked>`; trace lookup `<yes/no>`; service(s) `<list or n/a>`; error `<message/code or n/a>`
+### Observability Platform Coverage
+- `<observability-platform-1>`: `<hit|miss|blocked>`; trace lookup `<yes/no>`; service(s) `<list or n/a>`; error `<message/code or n/a>`
+- `<observability-platform-2>`: `<hit|miss|blocked>`; trace lookup `<yes/no>`; service(s) `<list or n/a>`; error `<message/code or n/a>`
 
 ### Root cause
 <statement linked to trace evidence>
