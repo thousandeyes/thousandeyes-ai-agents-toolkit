@@ -4,6 +4,17 @@ This repository contains the ThousandEyes AI Agents Toolkit: a growing collectio
 
 ## What is included
 
+### ThousandEyes Codex Plugin
+
+This repository now includes a local Codex marketplace plugin for ThousandEyes at `plugins/thousandeyes`, with a matching marketplace definition at `.agents/plugins/marketplace.json`.
+
+#### Install in Codex
+
+1. Open Codex and add the local marketplace rooted at this repository's `.agents/plugins/marketplace.json`.
+2. Find **ThousandEyes** in that marketplace and install it.
+3. Complete authentication when prompted.
+4. Start a new chat and use ThousandEyes tools through the plugin-provided MCP integration.
+
 ### ThousandEyes Cursor Plugin
 
 As an alternative to configuring the ThousandEyes MCP Server directly in Cursor, you can install the ThousandEyes Cursor plugin.
