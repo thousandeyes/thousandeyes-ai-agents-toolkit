@@ -1,0 +1,20 @@
+{
+  "name": "thousandeyes",
+  "interface": {
+    "displayName": "ThousandEyes"
+  },
+  "plugins": [
+    {
+      "name": "thousandeyes",
+      "source": {
+        "source": "local",
+        "path": "./plugins/thousandeyes"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Productivity"
+    }
+  ]
+}

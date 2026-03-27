@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "ThousandEyes": {
+      "type": "http",
+      "url": "https://api.thousandeyes.com/mcp"
+    }
+  }
+}
