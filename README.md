@@ -8,6 +8,15 @@ This repository contains the ThousandEyes AI Agents Toolkit: a growing collectio
 | --- | --- |
 | [thousandeyes-test-trace-correlation](skills/thousandeyes-test-trace-correlation/SKILL.md) | Investigate failing ThousandEyes synthetic tests with MCP tools. Use when a user wants ThousandEyes test triage, service-map or trace-ID correlation, distributed-tracing checks, correlation across Observability Platforms, or evidence-backed root-cause analysis with optional code fixes. |
 
+## Skill sync workflow
+
+The repository-level `skills/` directory is the source of truth for shared skills. Cursor and Claude Code discover those skills directly from the repo root, while the Codex plugin ships mirrored copies under `plugins/thousandeyes/skills/`.
+
+- Sync all Codex skill copies after editing or adding shared skills: `bash scripts/sync_codex_skill.sh sync`
+- Verify all mirrored Codex skill copies are still aligned: `bash scripts/sync_codex_skill.sh check`
+- Scope the command to specific skills when needed: `bash scripts/sync_codex_skill.sh sync <skill-name>`
+- Enable the repo hook so commits are blocked when the copies drift: `git config core.hooksPath .githooks`
+
 ## Getting Started
 
 ### ThousandEyes Codex Plugin
@@ -47,7 +56,7 @@ For more details on plugin installation and management, see: https://cursor.com/
 
 ### ThousandEyes Claude Code Plugin
 
-As an alternative to configuring the ThousandEyes MCP Server directly in Claude Code, you can install the ThousandEyes Claude Code plugin.
+As an alternative to configuring the ThousandEyes MCP Server directly in Claude Code, you can install the ThousandEyes Claude Code plugin. The plugin exposes the shared repo skills in `skills/` alongside the MCP integration.
 
 #### Install via Claude Code CLI
 
@@ -63,6 +72,12 @@ As an alternative to configuring the ThousandEyes MCP Server directly in Claude 
 2. Type `/plugin` and search for **ThousandEyes**.
 3. Follow the prompts to install and choose the scope.
 4. Start a new session and use ThousandEyes tools through the plugin-provided MCP integration.
+
+#### Using shared skills in Claude Code
+
+- Shared plugin skills live under `skills/` at the repository root.
+- Claude Code namespaces plugin skills by plugin name, so `skills/thousandeyes-test-trace-correlation/SKILL.md` is available as `/thousandeyes:thousandeyes-test-trace-correlation`.
+- After adding a new shared skill, reinstall or reload the plugin if Claude Code does not pick it up immediately.
 
 For more details on Claude Code plugins, see: https://code.claude.com/docs/en/plugins-reference
 

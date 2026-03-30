@@ -15,6 +15,15 @@ Agent guidance for working in this repository.
 - Prefer adding new integration-specific content in clearly named folders/files.
 - Keep documentation aligned with the actual repository layout and supported integrations.
 
+## Shared skill mirroring guidance
+
+- Repository-root `skills/` is the source of truth for shared skill content.
+- Cursor and Claude Code can use root-level skills directly, but the Codex plugin must carry mirrored copies under `plugins/thousandeyes/skills/`.
+- When adding, removing, or editing any shared skill under `skills/`, sync the Codex plugin copies with `bash scripts/sync_codex_skill.sh sync`.
+- Before finishing skill-related work, verify mirrors with `bash scripts/sync_codex_skill.sh check`.
+- Keep `.githooks/pre-commit` aligned with that script so commits fail when root and Codex skill copies drift.
+- Keep shared skills compatible with both Cursor and Claude Code expectations: `skills/<skill-name>/SKILL.md` with valid frontmatter.
+
 ## Cursor plugin-specific guidance
 
 - The Cursor plugin manifest is `.cursor-plugin/plugin.json` at repository root.
@@ -54,8 +63,9 @@ Before finishing plugin work, verify all of the following:
 
 ### Supported components
 
-The Claude Code plugin in this repo provides **MCP server integration only**. Do not add skills, agents, hooks, commands, or LSP servers unless explicitly requested.
+The Claude Code plugin in this repo provides MCP server integration and shared skills from the repository-root `skills/` directory. Add other Claude plugin components only when explicitly requested.
 
+- `skills/<skill-name>/SKILL.md` at repository root for shared plugin skills
 - `.mcp.json` at plugin root for MCP server definitions (shared with the Cursor plugin).
 
 ### Validation and pitfalls checklist (when editing Claude Code plugin assets)
@@ -65,12 +75,12 @@ Before finishing plugin work, verify all of the following:
 1. `.claude-plugin/plugin.json` exists at repository root and is valid JSON.
 2. Plugin `name` is lowercase kebab-case; optional metadata (`description`, `author`, `version`, etc.) is accurate.
 3. All manifest paths are **relative** (start with `./`, no `..`, no absolute paths) and resolve correctly.
-4. `.mcp.json` at the plugin root is valid JSON and contains correct MCP server definitions.
-5. Docs and examples match the current file layout and filenames.
+4. Shared skills referenced by the Claude plugin live under repository-root `skills/` and have required frontmatter fields.
+5. `.mcp.json` at the plugin root is valid JSON and contains correct MCP server definitions.
+6. Docs and examples match the current file layout and filenames.
 
 ## Safety and quality expectations
 
 - Never hardcode secrets or tokens in manifests, docs, scripts, or examples.
 - Prefer environment variable placeholders for credentials
 - Preserve user changes in unrelated files; do not revert work you did not make.
-

@@ -1,6 +1,6 @@
 {
   "name": "thousandeyes",
-  "description": "Connect Claude Code to ThousandEyes MCP endpoints for network intelligence workflows.",
+  "description": "Connect Claude Code to ThousandEyes MCP endpoints and shared ThousandEyes skills for network intelligence workflows.",
   "version": "1.0.0",
   "author": {
     "name": "ThousandEyes",
@@ -8,5 +8,6 @@
     "url": "https://www.thousandeyes.com"
   },
   "homepage": "https://www.thousandeyes.com",
+  "skills": "./skills",
   "keywords": ["claude-code", "plugin", "mcp", "thousandeyes", "networking", "observability"]
 }
