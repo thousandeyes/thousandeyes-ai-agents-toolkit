@@ -12,9 +12,9 @@
 - Tracestate attribute: `<tracestate|w3c.tracestate>`
 - Raw tracestate: `<raw value>`
 - Decoded ThousandEyes payload: `<decoded value>`
-- Recovered IDs: account `<accountId>`, test `<testId>`, agent `<agentId>`, execution time `<executionTime>`
 
 ### ThousandEyes Result
+- Account: `<accountId>`
 - Test: `<test name>` (`<testId>`, `<type>`)
 - Result window: `<time window or exact round>`
 - Agent: `<agentId>`

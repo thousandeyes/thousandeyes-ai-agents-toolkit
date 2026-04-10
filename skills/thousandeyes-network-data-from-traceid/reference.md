@@ -1,8 +1,8 @@
 # TraceID to ThousandEyes Reference
 
-## MCP Tool Checklist
+## Tool Discovery Checklist
 
-Read descriptor JSON before calling tools.
+Use the client's built-in tool discovery first. When schemas or argument contracts are available, inspect them before calling unfamiliar tools.
 
 Primary ThousandEyes tools for this skill:
 
@@ -16,7 +16,7 @@ Observability Platform expectations:
 
 - Prefer exact trace lookup by `traceId`
 - If direct trace lookup is unavailable, prefer exact span or log search by `traceId`
-- Record one outcome per backend: `hit`, `miss`, or `blocked`
+- Record one outcome per Observability Platform: `hit`, `miss`, or `blocked`
 
 ## Trace Attribute Extraction Rules
 
@@ -25,14 +25,14 @@ Search every trace hit for these attribute names:
 - `tracestate`
 - `w3c.tracestate`
 
-Inspect all levels that the backend exposes:
+Inspect all levels that the Observability Platform exposes:
 
 - trace-level attributes
 - resource attributes
 - span attributes
-- event attributes when the backend includes span events inline
+- event attributes when the Observability Platform includes span events inline
 
-If the backend also exposes ThousandEyes OpenTelemetry attributes such as `thousandeyes.account.id` or `thousandeyes.test.id`, use them to validate the decoded result. Do not use them as a substitute for the `te=` value when you still need agent or exact execution-time context.
+If the Observability Platform also exposes ThousandEyes OpenTelemetry attributes such as `thousandeyes.account.id` or `thousandeyes.test.id`, use them to validate the decoded result. Do not use them as a substitute for the `te=` value when you still need agent or exact execution-time context.
 
 ## W3C Tracestate Parsing Rules
 
@@ -71,7 +71,7 @@ Recovered fields:
 - `agentId` -> `agentId=2334`
 - `startTime` -> `executionTime=1775723400` (use this as the round selector for the exact test execution)
 
-Treat `startTime` as Unix epoch seconds unless the backend clearly documents a different unit.
+Treat `startTime` as Unix epoch seconds unless the Observability Platform clearly documents a different unit.
 
 ## ThousandEyes Query Strategy
 
@@ -88,12 +88,12 @@ When the ThousandEyes MCP does not expose a literal `roundId`:
 1. Prefer results from the recovered `agentId`.
 2. Select the result or bucket with the smallest time delta from `executionTime`.
 3. State the chosen selection rule in the final answer if the match is approximate.
-4. If the backend only returns aggregated metrics, say that the exact round was not directly exposed and summarize the closest available window instead.
+4. If the Observability Platform only returns aggregated metrics, say that the exact round was not directly exposed and summarize the closest available window instead.
 
 ## Failure Modes
 
 - No Observability Platform returns the trace.
-- A backend returns the trace, but no `tracestate` or `w3c.tracestate` attribute exists.
+- An Observability Platform returns the trace, but no `tracestate` or `w3c.tracestate` attribute exists.
 - `tracestate` exists, but no `te=` vendor entry is present.
 - The `te` value decodes, but one of `__a`, `testId`, `agentId`, or `startTime` is missing.
 - ThousandEyes returns the test definition, but not an exact round or path result for the recovered execution time.

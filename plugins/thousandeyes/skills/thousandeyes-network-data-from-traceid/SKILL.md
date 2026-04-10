@@ -1,19 +1,19 @@
 ---
 name: thousandeyes-network-data-from-traceid
-description: Recover ThousandEyes Network & App Synthetics data from a trace ID. Use when a user has a `traceId` and both ThousandEyes MCP plus one or more Observability Platform MCP integrations are available, and Codex needs to query every available Observability Platform for the trace, extract `tracestate` or `w3c.tracestate`, decode the embedded ThousandEyes permalink, recover the ThousandEyes account/test/agent/execution identifiers, and fetch the matching ThousandEyes network data.
+description: Obtain ThousandEyes Network & App Synthetics data given a trace ID. Use when a user has a `traceId`, ThousandEyes MCP is available, and one or more Observability Platform integrations or equivalent tooling paths are available to query every relevant Observability Platform for the trace, extract `tracestate` or `w3c.tracestate`, decode the embedded ThousandEyes permalink, recover the ThousandEyes account/test/agent/execution identifiers, and fetch the matching ThousandEyes network data.
 ---
-# ThousandEyes Network Data from TraceID
+# Obtain ThousandEyes Network Data from TraceID
 
 Use this skill to pivot from an existing distributed trace into the matching ThousandEyes test result. Treat ThousandEyes as the system of record for the recovered test data, and use Observability Platforms to discover the ThousandEyes context from the trace.
 
 ## Required Behavior
 
-1. Read MCP tool descriptor JSON before using any MCP tool.
-2. Verify that ThousandEyes MCP and at least one Observability Platform MCP are available before starting.
-3. Build an inventory of every Observability Platform MCP available in the current session.
+1. Use the client's built-in tool discovery for available ThousandEyes and Observability Platform tools. Inspect schemas or argument details before calling unfamiliar tools when that information is available.
+2. Verify that ThousandEyes MCP is available and that at least one Observability Platform integration or equivalent tooling path is available before starting.
+3. Build an inventory of every Observability Platform integration or equivalent tooling path available in the current session.
 4. Query every available Observability Platform by exact `traceId`. Do not stop after the first hit.
 5. For every matching trace, inspect trace-level, resource-level, and span-level attributes for `tracestate` and `w3c.tracestate`.
-6. If a backend lacks direct trace lookup but can search spans or logs by exact `traceId`, use that fallback and record it as fallback correlation.
+6. If an Observability Platform lacks direct trace lookup but can search spans or logs by exact `traceId`, use that fallback and record it as fallback correlation.
 7. Parse the `tracestate` value as a W3C vendor-state list and extract the `te=` member.
 8. URL-decode the ThousandEyes value before reading query parameters.
 9. Recover `accountId` from `__a`, `testId` from `testId`, `agentId` from `agentId`, and `executionTime` from `startTime`. Treat `executionTime` as the round selector for the exact ThousandEyes test execution.
@@ -24,7 +24,7 @@ Use this skill to pivot from an existing distributed trace into the matching Tho
 ## Inputs To Gather
 
 - Required: `traceId`
-- Optional: expected service name, backend preference, or investigation window
+- Optional: expected service name, Observability Platform preference, or investigation window
 - Optional: whether the user wants raw data only or diagnosis too
 
 Load [reference.md](reference.md) for parsing rules, identifier extraction, and ThousandEyes query strategy. Load [examples.md](examples.md) only when the user wants a structured report.
@@ -33,15 +33,15 @@ Load [reference.md](reference.md) for parsing rules, identifier extraction, and 
 
 ### 1) Inventory Observability Platforms
 
-1. Check available MCP servers and read their schemas first.
-2. Identify every backend that can query traces, spans, logs, or telemetry by exact `traceId`.
-3. Mark each backend as `trace`, `span-search`, `log-search`, or `blocked`.
+1. Check available ThousandEyes and Observability Platform tools, integrations, and any equivalent tooling surfaced by the current client. Inspect schemas or argument contracts when they are available.
+2. Identify every Observability Platform that can query traces, spans, logs, or telemetry by exact `traceId`.
+3. Mark each Observability Platform as `trace`, `span-search`, `log-search`, or `blocked`.
 
-### 2) Query the trace across every backend
+### 2) Query the trace across every Observability Platform
 
-1. Use exact trace lookup first on each backend.
+1. Use exact trace lookup first on each Observability Platform.
 2. If exact trace lookup is unavailable, use exact `traceId` search in spans or logs scoped to a reasonable window.
-3. Capture one result per backend: `hit`, `miss`, or `blocked`.
+3. Capture one result per Observability Platform: `hit`, `miss`, or `blocked`.
 4. Preserve the raw attribute payload that contains the ThousandEyes linkage.
 
 ### 3) Recover ThousandEyes identifiers from tracestate
@@ -51,7 +51,7 @@ Load [reference.md](reference.md) for parsing rules, identifier extraction, and 
 3. Extract only the `te` vendor entry if other vendors are present.
 4. Decode the ThousandEyes payload and parse the query parameters.
 5. Recover `accountId`, `testId`, `agentId`, and `executionTime`.
-6. If multiple backends produce ThousandEyes identifiers, compare them. Treat matching values as confirmation and call out disagreements explicitly.
+6. If multiple Observability Platforms produce ThousandEyes identifiers, compare them. Treat matching values as confirmation and call out disagreements explicitly.
 
 ### 4) Query ThousandEyes
 
