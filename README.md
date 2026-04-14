@@ -6,6 +6,7 @@ This repository contains the ThousandEyes AI Agents Toolkit: a growing collectio
 
 | Skill | Description |
 | --- | --- |
+| [thousandeyes-network-data-from-traceid](skills/thousandeyes-network-data-from-traceid/SKILL.md) | Obtain ThousandEyes Network & App Synthetics data given a trace ID. Use when a user has a `traceId`, ThousandEyes MCP is available, and one or more Observability Platform integrations or equivalent tooling paths are available to query every relevant Observability Platform for the trace, extract `tracestate` or `w3c.tracestate`, decode the embedded ThousandEyes permalink, recover the ThousandEyes account/test/agent/execution identifiers, and fetch the matching ThousandEyes network data. |
 | [thousandeyes-test-trace-correlation](skills/thousandeyes-test-trace-correlation/SKILL.md) | Investigate failing ThousandEyes synthetic tests with MCP tools. Use when a user wants ThousandEyes test triage, service-map or trace-ID correlation, distributed-tracing checks, correlation across Observability Platforms, or evidence-backed root-cause analysis with optional code fixes. |
 
 ## Skill sync workflow
