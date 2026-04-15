@@ -1,6 +1,28 @@
 # ThousandEyes Alert Rule Management Examples
 
-## Example 1: Create a new HTTP alert rule
+## Example 1: List existing alert rules
+
+User intent:
+
+```text
+Show me the alert rules in account 123456 so I can find the API latency rule.
+```
+
+Possible tool call shape:
+
+```json
+{
+  "aid": "123456"
+}
+```
+
+Expected response pattern:
+
+```text
+Use list_alert_rules to return the available rule IDs and names, then ask which rule the user wants to inspect or modify if the target is still ambiguous.
+```
+
+## Example 2: Create a new HTTP alert rule
 
 User intent:
 
@@ -40,7 +62,7 @@ Possible tool call shape:
 }
 ```
 
-## Example 2: Update an endpoint browser-session rule
+## Example 3: Inspect a rule and prepare an update
 
 User intent:
 
@@ -51,7 +73,15 @@ Update rule 127094 so it only applies to the Finance label, keeps the same core 
 Expected handling:
 
 ```text
-Because update_alert_rule still requires rule_name, expression, alert_type, and rounds_violating_out_of, recover those current values first if a read tool is available. If not, ask the user for them before sending the update.
+Call get_alert_rule first to recover the current rule_name, expression, alert_type, and rounds_violating_out_of. Then summarize the planned update and wait for confirmation before calling update_alert_rule.
+```
+
+Possible read call shape:
+
+```json
+{
+  "rule_id": "127094"
+}
 ```
 
 Possible tool call shape after the required values are known:
@@ -68,7 +98,7 @@ Possible tool call shape after the required values are known:
 }
 ```
 
-## Example 3: Delete an alert rule
+## Example 4: Delete an alert rule
 
 User intent:
 
@@ -93,7 +123,7 @@ Possible tool call shape:
 }
 ```
 
-## Example 4: Handle an unsupported UI-only selector
+## Example 5: Handle an unsupported UI-only selector
 
 User intent:
 

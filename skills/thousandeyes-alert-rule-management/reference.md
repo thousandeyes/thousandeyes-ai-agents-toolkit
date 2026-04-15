@@ -6,15 +6,28 @@
 - Alert rule expression metadata: https://developer.cisco.com/docs/thousandeyes/alert-rule-metadata/
 - Expression table anchor: https://developer.cisco.com/docs/thousandeyes/alert-rule-metadata/#expressions
 
-## Supported Write Tools
+## Supported MCP Tools
 
-The current skill is centered on these write-capable MCP tools:
+The current skill is centered on these alert-rule MCP tools:
 
+- `list_alert_rules`
+- `get_alert_rule`
 - `create_alert_rule`
 - `update_alert_rule`
 - `delete_alert_rule`
 
 Read the tool schema before calling them. Do not assume the docs UI fields map one-to-one to MCP arguments.
+
+## Read Tool Arguments
+
+### `list_alert_rules`
+
+- optional `aid`
+
+### `get_alert_rule`
+
+- `rule_id`
+- optional `aid`
 
 ## Required MCP Arguments
 
@@ -62,6 +75,8 @@ Read the tool schema before calling them. Do not assume the docs UI fields map o
 
 Use this mapping when translating the ThousandEyes docs into MCP arguments:
 
+- Existing rules inventory -> `list_alert_rules`
+- Existing rule details by ID -> `get_alert_rule`
 - Rule Name -> `rule_name`
 - Alert Type -> `alert_type`
 - Tests -> `test_ids`
@@ -156,9 +171,18 @@ Keep examples small. If the user does not specify a notification method, omit th
 
 If the user only knows the one field they want to change:
 
-1. Try to recover the current rule values using any available read path.
-2. If no read path exists, ask for the missing required values.
-3. Do not guess.
+1. Use `get_alert_rule` to recover the current rule values when `rule_id` is known.
+2. If only the rule name is known, use `list_alert_rules` first to identify the right `rule_id`, then call `get_alert_rule`.
+3. If no read path exists, ask for the missing required values.
+4. Do not guess.
+
+## Read Strategy
+
+Use the read tools to avoid risky write guesses:
+
+1. `list_alert_rules` to discover candidate rules and IDs.
+2. `get_alert_rule` to confirm the exact rule and recover the current required core fields.
+3. Only move on to `update_alert_rule` once the required write fields are known and confirmed.
 
 ## Delete Strategy
 
