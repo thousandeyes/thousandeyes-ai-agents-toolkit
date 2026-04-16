@@ -9,6 +9,37 @@ This repository contains the ThousandEyes AI Agents Toolkit: a growing collectio
 | [thousandeyes-network-data-from-traceid](skills/thousandeyes-network-data-from-traceid/SKILL.md) | Obtain ThousandEyes Network & App Synthetics data given a trace ID. Use when a user has a `traceId`, ThousandEyes MCP is available, and one or more Observability Platform integrations or equivalent tooling paths are available to query every relevant Observability Platform for the trace, extract `tracestate` or `w3c.tracestate`, decode the embedded ThousandEyes permalink, recover the ThousandEyes account/test/agent/execution identifiers, and fetch the matching ThousandEyes network data. |
 | [thousandeyes-test-trace-correlation](skills/thousandeyes-test-trace-correlation/SKILL.md) | Investigate failing ThousandEyes synthetic tests with MCP tools. Use when a user wants ThousandEyes test triage, service-map or trace-ID correlation, distributed-tracing checks, correlation across Observability Platforms, or evidence-backed root-cause analysis with optional code fixes. |
 
+## Install via skills.sh
+
+You can install these shared skills directly from the open `skills` ecosystem with `npx skills add`.
+
+### Install all ThousandEyes skills
+
+```bash
+npx skills add thousandeyes/thousandeyes-ai-agents-toolkit
+```
+
+### Install a specific skill
+
+```bash
+npx skills add thousandeyes/thousandeyes-ai-agents-toolkit --skill thousandeyes-test-trace-correlation
+npx skills add thousandeyes/thousandeyes-ai-agents-toolkit --skill thousandeyes-network-data-from-traceid
+```
+
+### Preview available skills
+
+```bash
+npx skills add thousandeyes/thousandeyes-ai-agents-toolkit --list
+```
+
+### Install to a specific agent
+
+```bash
+npx skills add thousandeyes/thousandeyes-ai-agents-toolkit -a claude-code
+npx skills add thousandeyes/thousandeyes-ai-agents-toolkit -a codex
+npx skills add thousandeyes/thousandeyes-ai-agents-toolkit -a cursor
+```
+
 ## Skill sync workflow
 
 The repository-level `skills/` directory is the source of truth for shared skills. Cursor and Claude Code discover those skills directly from the repo root, while the Codex plugin ships mirrored copies under `plugins/thousandeyes/skills/`.
@@ -17,6 +48,7 @@ The repository-level `skills/` directory is the source of truth for shared skill
 - Verify all mirrored Codex skill copies are still aligned: `bash scripts/sync_codex_skill.sh check`
 - Scope the command to specific skills when needed: `bash scripts/sync_codex_skill.sh sync <skill-name>`
 - Enable the repo hook so commits are blocked when the copies drift: `git config core.hooksPath .githooks`
+- GitHub Actions validates mirror sync on pull requests and runs `npx skills add thousandeyes/thousandeyes-ai-agents-toolkit` on `main` or manual dispatch for skill-related changes, so authors do not need to run the `skills` CLI locally just to register updates on `skills.sh`.
 
 ## Getting Started
 
