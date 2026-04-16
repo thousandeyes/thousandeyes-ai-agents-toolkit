@@ -1,0 +1,3 @@
+interface:
+  display_name: "ThousandEyes Synthetic Monitoring"
+  short_description: "Manage synthetic monitoring across Network and Application Synthetics and Browser Synthetics"

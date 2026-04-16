@@ -1,4 +1,4 @@
-# ThousandEyes Synthetic Test Management Examples
+# ThousandEyes Synthetic Monitoring Examples
 
 ## Example 1: List tests by name
 
@@ -27,7 +27,7 @@ Use list_network_app_synthetics_tests to return matching tests with their test I
 User intent:
 
 ```text
-Create a synthetic test for https://api.example.com/health from three US cloud agents every 5 minutes.
+Set up synthetic monitoring for https://api.example.com/health from three US cloud agents every 5 minutes.
 ```
 
 Execution summary before confirmation:
@@ -58,12 +58,12 @@ Possible tool call shape:
 }
 ```
 
-## Example 3: Run an instant page-load validation first
+## Example 3: Run a Browser Synthetics validation first
 
 User intent:
 
 ```text
-Check our homepage from Europe right now before we set up continuous monitoring.
+Check our homepage from Europe right now before we set up scheduled Browser Synthetics monitoring.
 ```
 
 Execution summary before run:
@@ -139,16 +139,16 @@ Possible tool call shape:
 }
 ```
 
-## Example 6: Deploy a SaaS monitoring template
+## Example 6: Deploy an application monitoring template
 
 User intent:
 
 ```text
-Set up Salesforce monitoring for tenant acme from our standard cloud agents.
+Set up synthetic monitoring for Salesforce tenant acme from our standard cloud agents.
 ```
 
 Expected handling:
 
 ```text
-Use get_templates(name="Salesforce") to find the right template, collect its required user inputs, summarize the deployment plan, and wait for confirmation before calling deploy_template.
+Use get_templates(name="Salesforce") to find the right application template, collect its required user inputs, summarize the deployment plan, and wait for confirmation before calling deploy_template.
 ```

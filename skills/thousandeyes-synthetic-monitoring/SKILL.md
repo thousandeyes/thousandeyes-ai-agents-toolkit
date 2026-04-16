@@ -1,32 +1,34 @@
 ---
-name: thousandeyes-synthetic-test-management
-description: List, inspect, create, update, delete, or validate ThousandEyes synthetic tests with MCP tools. Use when a user wants to manage Network & App Synthetics tests, run instant checks before creating a scheduled test, deploy template-based SaaS monitoring, or clean up existing tests.
+name: thousandeyes-synthetic-monitoring
+description: Manage ThousandEyes synthetic monitoring with MCP tools. Use when a user wants to list, inspect, create, update, delete, or validate synthetic tests; deploy application templates; or choose the right ThousandEyes monitoring approach across Network and Application Synthetics and Browser Synthetics.
 ---
-# ThousandEyes Synthetic Test Management
+# ThousandEyes Synthetic Monitoring
 
-Use this skill to manage ThousandEyes synthetic tests through the available MCP tools. Start with discovery, map the requested outcome to the correct test type, validate required arguments before any write, and confirm destructive or persistent changes with the user.
+Use this skill to manage ThousandEyes synthetic monitoring through the available MCP tools. Treat synthetic monitoring as the umbrella workflow for creating, validating, updating, and deleting synthetic tests, and for deploying template-based monitoring for an application.
 
 ## Use This Skill When
 
 - A user wants to list or inspect existing ThousandEyes synthetic tests
-- A user wants to create a new scheduled synthetic test
-- A user wants to update an existing synthetic test
+- A user wants to create or update synthetic monitoring for an application or service
 - A user wants to delete one or more synthetic tests
-- A user wants to run an instant synthetic check before creating a scheduled test
-- A user wants to deploy a ThousandEyes monitoring template for a SaaS application
-- A user needs help choosing the right ThousandEyes synthetic test type for a target
+- A user wants to run a dynamic or ad hoc check before creating scheduled monitoring
+- A user wants to deploy a template-based monitoring configuration for an application
+- A user needs help deciding between Network and Application Synthetics and Browser Synthetics
 
 ## Required Behavior
 
-1. Inspect the relevant ThousandEyes tool schema before using unfamiliar synthetic-test tools.
+1. Inspect the relevant ThousandEyes tool schema before using unfamiliar synthetic-monitoring tools.
 2. Confirm the user intent first: `list`, `get`, `create`, `update`, `delete`, `instant-test`, or `deploy-template`.
 3. Treat `create_synthetic_test`, `update_synthetic_test`, `delete_synthetic_test`, and `deploy_template` as external write actions. Get explicit user confirmation before calling them.
-4. Treat instant-test tools as execution actions. Confirm before running them unless the user explicitly asked to run the check now.
-5. Use read-only discovery tools without extra confirmation when they help identify the right test, test type, agent set, or template.
+4. Treat instant-test tools as execution actions for dynamic validation. Confirm before running them unless the user explicitly asked to run the check now.
+5. Use read-only discovery tools without extra confirmation when they help identify the right synthetic test, agent set, or application template.
 6. For `update` and `delete`, require both `test_id` and `test_type`.
 7. Do not invent tool arguments that are not exposed by the MCP tool schema.
 8. When the user gives only a test name, use discovery tools to recover the exact `test_id` and `test_type` before any write.
-9. Recommend the narrowest valid test type for the target instead of defaulting everything to HTTP.
+9. Map the request to the correct product language first:
+   - Network and Application Synthetics for network, API, DNS, and HTTP server-style monitoring
+   - Browser Synthetics for page-load and transaction-style browser monitoring
+   - Synthetic tests and templates for application monitoring workflows
 10. Summarize the exact payload or execution plan before running any write or instant action, then summarize the result after execution.
 
 ## Inputs To Gather
@@ -40,7 +42,7 @@ Use this skill to manage ThousandEyes synthetic tests through the available MCP 
 - For `update`: the fields to change plus the current required test identifiers
 - For `deploy-template`: template identity plus all required `user_input_values`
 
-Load [reference.md](reference.md) for test-type mapping, supported write tools, and validation rules. Load [examples.md](examples.md) only when you need response or payload examples.
+Load [reference.md](reference.md) for product-language mapping, supported tools, and validation rules. Load [examples.md](examples.md) only when you need response or payload examples.
 
 ## Workflow
 
@@ -50,26 +52,28 @@ Load [reference.md](reference.md) for test-type mapping, supported write tools, 
 2. Confirm whether the user wants to browse, inspect, create, update, delete, run an instant test, or deploy a template.
 3. If the request mixes multiple operations, split them into separate confirmed actions.
 
-### 2) Discover the target test, agent set, or template
+### 2) Discover the target synthetic test, agent set, or template
 
 1. Use `list_network_app_synthetics_tests` when the user wants to browse tests or only knows a partial test name or target.
 2. Use `get_network_app_synthetics_test` when `test_id` and `test_type` are already known.
 3. Use `list_cloud_enterprise_agents` when agent IDs are needed for synthetic monitoring.
-4. Use `get_templates` when the user wants SaaS monitoring or only knows the application name.
-5. If the exact scheduled test type is unknown, map the target to a recommended type using [reference.md](reference.md) before proposing creation.
+4. Use `get_templates` when the user wants to monitor an application through a prebuilt template or only knows the application name.
+5. If the exact scheduled test type is unknown, map the target to a recommended synthetic test type using [reference.md](reference.md) before proposing creation.
 
-### 3) Normalize the requested monitoring action
+### 3) Normalize the requested synthetic monitoring action
 
-1. Match the target to the correct test family:
-   - `http-server` for URL availability and response timing
-   - `page-load` for browser-rendered pages and component timing
-   - `dns-server` or `dns-trace` for DNS validation
-   - `agent-to-server` for network path and reachability
-   - `agent-to-agent` for inter-site connectivity between enterprise agents
-   - `api` for multi-step API request workflows
-   - `web-transactions` for scripted browser journeys
-   - `bgp` when the user is monitoring route reachability for a prefix
-2. If a SaaS template already covers the target use case, prefer `deploy_template` over building a large manual test set from scratch.
+1. Match the target to the correct product family and test family:
+   - Network and Application Synthetics:
+     - `http-server` for URL availability and response timing
+     - `agent-to-server` for network path and reachability
+     - `agent-to-agent` for inter-site connectivity between enterprise agents
+     - `api` for multi-step API request workflows
+     - `dns-server`, `dns-trace`, or `dnssec` for DNS monitoring
+     - `bgp` when the user is monitoring route reachability for a prefix
+   - Browser Synthetics:
+     - `page-load` for browser-rendered page performance and waterfalls
+     - `web-transactions` for scripted browser journeys
+2. When the user wants to monitor an application rather than one standalone endpoint, prefer template discovery and deployment first.
 3. If the user wants validation before a persistent change, prefer the matching instant-test tool first.
 
 ### 4) Build and validate the plan
@@ -86,8 +90,8 @@ Load [reference.md](reference.md) for test-type mapping, supported write tools, 
 4. Validate agent requirements:
    - `agent_ids` are required for all scheduled synthetic tests except `bgp`
    - `agent-to-agent` requires enterprise agents on both ends
-   - external customer-view tests should usually use multiple cloud agents
-5. For `web-transactions`, require an async-function style script and both `url` and `transaction_script`.
+   - external monitoring should usually use multiple cloud agents
+5. For Browser Synthetics `web-transactions`, require an async-function style script and both `url` and `transaction_script`.
 6. For `update`, do not guess the current test configuration. If required update fields are unclear, inspect the current test first.
 
 ### 5) Confirm before execution
@@ -111,7 +115,7 @@ Do not execute until the user confirms, unless the user explicitly asked to run 
 - `update_synthetic_test` for changes to existing scheduled tests
 - `delete_synthetic_test` for removals
 - the matching `run_*_instant_test` tool for immediate validation
-- `get_templates` and `deploy_template` for template-based SaaS monitoring
+- `get_templates` and `deploy_template` for template-based synthetic monitoring of an application
 
 ### 7) Report the outcome
 
@@ -123,7 +127,7 @@ Always return:
 - `test_id` and `test_type` when applicable
 - the final confirmed payload or execution summary
 - the key result fields returned by the tool
-- the recommended next step, especially when an instant test should lead to a scheduled test or alerting follow-up
+- the recommended next step, especially when a dynamic validation should lead to scheduled synthetic monitoring or template-based deployment
 
 ## Guardrails
 
