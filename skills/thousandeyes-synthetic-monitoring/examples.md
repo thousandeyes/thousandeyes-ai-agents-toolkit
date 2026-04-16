@@ -152,3 +152,45 @@ Expected handling:
 ```text
 Use get_templates(name="Salesforce") to find the right application template, collect its required user inputs, summarize the deployment plan, and wait for confirmation before calling deploy_template.
 ```
+
+## Example 7: Create a Browser Synthetics transaction test
+
+User intent:
+
+```text
+Create a browser transaction that signs in to our portal and verifies the dashboard loads.
+```
+
+Expected handling:
+
+```text
+Use the Browser Synthetics transaction guidance from reference.md, check the ThousandEyes transaction-scripting-examples GitHub repo for a similar workflow, draft the script using the async BrowserBot pattern, and prefer run_web_transaction_instant_test before saving scheduled monitoring.
+```
+
+## Example 8: Create an API test
+
+User intent:
+
+```text
+Create an API test that authenticates and then calls our health endpoint every five minutes.
+```
+
+Execution summary before confirmation:
+
+```text
+Planned tool: create_synthetic_test
+test_name: Auth and health API check
+test_type: api
+url: https://api.example.com
+agent_ids:
+  - <agent-1>
+  - <agent-2>
+requests_config:
+  - name: Authenticate
+    url: https://api.example.com/session
+    method: post
+  - name: Get Health
+    url: https://api.example.com/health
+    method: get
+interval: 300
+```

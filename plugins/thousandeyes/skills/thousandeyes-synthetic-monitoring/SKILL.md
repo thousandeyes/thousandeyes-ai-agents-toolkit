@@ -59,6 +59,8 @@ Load [reference.md](reference.md) for product-language mapping, supported tools,
 3. Use `list_cloud_enterprise_agents` when agent IDs are needed for synthetic monitoring.
 4. Use `get_templates` when the user wants to monitor an application through a prebuilt template or only knows the application name.
 5. If the exact scheduled test type is unknown, map the target to a recommended synthetic test type using [reference.md](reference.md) before proposing creation.
+6. If the user wants to create a Browser Synthetics transaction test, load the transaction guidance in [reference.md](reference.md) before drafting the script.
+7. If the user wants to create an API test, load the API-test guidance in [reference.md](reference.md) before proposing `requests_config`.
 
 ### 3) Normalize the requested synthetic monitoring action
 
@@ -92,7 +94,9 @@ Load [reference.md](reference.md) for product-language mapping, supported tools,
    - `agent-to-agent` requires enterprise agents on both ends
    - external monitoring should usually use multiple cloud agents
 5. For Browser Synthetics `web-transactions`, require an async-function style script and both `url` and `transaction_script`.
-6. For `update`, do not guess the current test configuration. If required update fields are unclear, inspect the current test first.
+6. For Browser Synthetics transaction creation, prefer existing examples from the ThousandEyes transaction scripting examples repository before writing a script from scratch.
+7. For API test creation, prefer a short, explicit step sequence with stable request names, full URLs, and only the headers/body fields the workflow needs.
+8. For `update`, do not guess the current test configuration. If required update fields are unclear, inspect the current test first.
 
 ### 5) Confirm before execution
 
@@ -137,6 +141,7 @@ Always return:
 - If the user asks for a partial update but the current test details are unclear, inspect the test first instead of guessing.
 - If multiple tests match a name or target, stop and ask the user to choose.
 - Keep sample transaction scripts minimal and point to [reference.md](reference.md) for the required async structure.
+- Keep API test payloads minimal and readable; do not invent unsupported step-builder features beyond the MCP schema.
 
 ## Additional Resources
 
