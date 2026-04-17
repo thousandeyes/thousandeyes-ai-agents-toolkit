@@ -27,22 +27,3 @@ jobs:
 
       - name: Verify Codex skill mirrors are in sync
         run: bash scripts/sync_codex_skill.sh check
-
-  publish:
-    name: Register skills with skills CLI
-    needs: validate
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-
-      - name: Install repo skills through skills CLI
-        env:
-          REPOSITORY: ${{ github.repository }}
-        run: npx skills add "${REPOSITORY}" -a codex -s '*' --copy -y

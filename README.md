@@ -13,6 +13,8 @@ This repository contains the ThousandEyes AI Agents Toolkit: a growing collectio
 
 You can install these shared skills directly from the open `skills` ecosystem with `npx skills add`.
 
+To contribute an install signal to `skills.sh`, run the command outside CI. The `skills` CLI disables telemetry in CI environments.
+
 ### Install all ThousandEyes skills
 
 ```bash
@@ -48,7 +50,7 @@ The repository-level `skills/` directory is the source of truth for shared skill
 - Verify all mirrored Codex skill copies are still aligned: `bash scripts/sync_codex_skill.sh check`
 - Scope the command to specific skills when needed: `bash scripts/sync_codex_skill.sh sync <skill-name>`
 - Enable the repo hook so commits are blocked when the copies drift: `git config core.hooksPath .githooks`
-- GitHub Actions validates mirror sync on pull requests and runs `npx skills add thousandeyes/thousandeyes-ai-agents-toolkit` on `main` or manual dispatch for skill-related changes, so authors do not need to run the `skills` CLI locally just to register updates on `skills.sh`.
+- GitHub Actions validates Codex skill mirror sync for skill-related changes.
 
 ## Getting Started
 
