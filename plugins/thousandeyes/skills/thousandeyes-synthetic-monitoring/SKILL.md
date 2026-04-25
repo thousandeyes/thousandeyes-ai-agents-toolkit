@@ -85,7 +85,8 @@ Load [reference.md](reference.md) for product-language mapping, supported tools,
 3. Validate the target-specific requirements:
    - `url` for `http-server`, `page-load`, `api`, and `web-transactions`
    - `server` for `agent-to-server`
-   - `domain` for `dns-server`, `dns-trace`, and `dnssec`
+   - `domain` and `dns_servers` for `dns-server`
+   - `domain` for `dns-trace` and `dnssec`
    - `prefix` for `bgp`
    - `target_agent_id` for `agent-to-agent`
    - `transaction_script` for `web-transactions`
