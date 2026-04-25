@@ -91,8 +91,9 @@ Possible tool call shape after the required values are known:
   "rule_id": "127094",
   "rule_name": "Finance browser error alert",
   "expression": "<<existing expression>>",
-  "alert_type": "browser-session",
+  "alert_type": "endpoint-browser-sessions-application",
   "rounds_violating_out_of": 3,
+  "alert_group_type": "browser-session",
   "endpoint_label_ids": ["finance-label-id"],
   "visited_sites_filter": ["app.example.com"]
 }

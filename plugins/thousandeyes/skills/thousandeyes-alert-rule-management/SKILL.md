@@ -1,6 +1,6 @@
 ---
 name: thousandeyes-alert-rule-management
-description: List, inspect, create, update, or delete ThousandEyes alert rules with MCP tools. Use when a user wants to manage alert rules across ThousandEyes product areas such as Network & App Synthetics, Endpoint Experience, Routing, Connected Devices, Cloud Insights, or Traffic Insights, and the session exposes `list_alert_rules`, `get_alert_rule`, `create_alert_rule`, `update_alert_rule`, or `delete_alert_rule`.
+description: List, inspect, create, update, or delete ThousandEyes alert rules with MCP tools. Use when a user wants help managing alert rules for the currently documented write domains, Network & App Synthetics and Routing, and the session exposes `list_alert_rules`, `get_alert_rule`, `create_alert_rule`, `update_alert_rule`, or `delete_alert_rule`.
 ---
 # ThousandEyes Alert Rule Management
 
