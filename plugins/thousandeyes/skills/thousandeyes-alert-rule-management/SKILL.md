@@ -88,6 +88,7 @@ Before calling the tool, present a short execution summary that includes:
 - the target rule ID when applicable
 - the core fields you will send
 - any fields you intentionally omitted because the tool does not support them
+- for `update`, an explicit warning that editing a rule with an active alert clears that alert and may retrigger after the updated rule takes effect
 
 Do not execute until the user confirms.
 
@@ -117,6 +118,7 @@ Always return:
 - Prefer `get_alert_rule` before `update_alert_rule` when the user does not already know the required core fields.
 - Never claim a UI feature is supported unless the MCP tool schema exposes it.
 - Never fabricate a partial update payload for `update_alert_rule`; it still needs the required core fields.
+- When preparing an update, explicitly warn about the active-alert reset behavior before asking for confirmation.
 - If the correct `rule_id` is uncertain, stop and ask.
 - If the expression is ambiguous or unsupported for the chosen alert type, explain the problem and ask for a corrected condition.
 - Keep notification examples minimal and avoid exposing sensitive recipient data unless the user explicitly provided it.

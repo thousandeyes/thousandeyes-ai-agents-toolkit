@@ -27,14 +27,14 @@ Use list_alert_rules to return the available rule IDs and names, then ask which 
 User intent:
 
 ```text
-Create an alert rule for my API test that fires when response time is above 500 ms for 2 out of 5 rounds and notify api-alerts@example.com.
+Create a general HTTP server alert rule that fires when response time is above 500 ms for 2 out of 5 rounds and notifies api-alerts@example.com.
 ```
 
 Execution summary before confirmation:
 
 ```text
 Planned tool: create_alert_rule
-rule_name: API latency alert
+rule_name: HTTP latency alert
 alert_type: http-server
 expression: ((responseTime >= 500 ms))
 rounds_violating_required: 2
@@ -49,7 +49,7 @@ Possible tool call shape:
 
 ```json
 {
-  "rule_name": "API latency alert",
+  "rule_name": "HTTP latency alert",
   "expression": "((responseTime >= 500 ms))",
   "alert_type": "http-server",
   "rounds_violating_out_of": 5,
@@ -61,6 +61,8 @@ Possible tool call shape:
   }
 }
 ```
+
+If the user wants the rule limited to specific HTTP server tests, discover and pass the matching `test_ids` before calling `create_alert_rule`.
 
 ## Example 3: Inspect a rule and prepare an update
 
