@@ -41,7 +41,7 @@ Use the narrowest valid test type for the target, but explain it in product lang
 | Test Type | Best For | Required Fields |
 | --- | --- | --- |
 | `agent-to-server` | Network and Application Synthetics for reachability, path, and latency | `test_name`, `server`, `agent_ids`; often `protocol` |
-| `agent-to-agent` | Network and Application Synthetics for inter-site connectivity | `test_name`, `agent_ids`, `target_agent_id`; often `protocol`, `port` |
+| `agent-to-agent` | Network and Application Synthetics for inter-site connectivity; currently create/get/delete only | `test_name`, `agent_ids`, `target_agent_id`; often `protocol`, `port` |
 | `http-server` | Network and Application Synthetics for URL availability and response timing | `test_name`, `url`, `agent_ids` |
 | `page-load` | Browser Synthetics for page performance and waterfalls | `test_name`, `url`, `agent_ids` |
 | `dns-server` | Network and Application Synthetics for DNS response time and availability | `test_name`, `domain`, `dns_servers`, `agent_ids` |
@@ -66,6 +66,7 @@ Additional update rules:
 - Include only the fields you intend to change, but do not guess unknown values.
 - If the exact current test is unclear, inspect it first with `get_network_app_synthetics_test`.
 - Keep `test_type` aligned with the existing test. Do not use update as a type conversion.
+- `agent-to-agent` is not currently supported by `update_synthetic_test`. If the user needs to change one, explain the limitation and recommend delete-and-recreate after inspection and confirmation.
 
 Delete rules:
 

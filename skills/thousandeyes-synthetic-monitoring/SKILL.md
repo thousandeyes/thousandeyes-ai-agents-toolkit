@@ -68,7 +68,7 @@ Load [reference.md](reference.md) for product-language mapping, supported tools,
    - Network and Application Synthetics:
      - `http-server` for URL availability and response timing
      - `agent-to-server` for network path and reachability
-     - `agent-to-agent` for inter-site connectivity between enterprise agents
+     - `agent-to-agent` for inter-site connectivity between enterprise agents; currently create/get/delete only
      - `api` for multi-step API request workflows
      - `dns-server`, `dns-trace`, or `dnssec` for DNS monitoring
      - `bgp` when the user is monitoring route reachability for a prefix
@@ -97,7 +97,7 @@ Load [reference.md](reference.md) for product-language mapping, supported tools,
 5. For Browser Synthetics `web-transactions`, require an async-function style script and both `url` and `transaction_script`.
 6. For Browser Synthetics transaction creation, prefer existing examples from the ThousandEyes transaction scripting examples repository before writing a script from scratch.
 7. For API test creation, prefer a short, explicit step sequence with stable request names, full URLs, and only the headers/body fields the workflow needs.
-8. For `update`, do not guess the current test configuration. If required update fields are unclear, inspect the current test first.
+8. For `update`, do not guess the current test configuration. If required update fields are unclear, inspect the current test first. If `test_type` is `agent-to-agent`, explain that `update_synthetic_test` does not currently support that type and recommend recreating the test after confirmation.
 
 ### 5) Confirm before execution
 
@@ -117,7 +117,7 @@ Do not execute until the user confirms, unless the user explicitly asked to run 
 - `list_network_app_synthetics_tests` for discovery
 - `get_network_app_synthetics_test` for current-state inspection
 - `create_synthetic_test` for new scheduled tests
-- `update_synthetic_test` for changes to existing scheduled tests
+- `update_synthetic_test` for changes to existing scheduled tests, except `agent-to-agent`
 - `delete_synthetic_test` for removals
 - the matching `run_*_instant_test` tool for immediate validation
 - `get_templates` and `deploy_template` for template-based synthetic monitoring of an application
@@ -140,6 +140,7 @@ Always return:
 - Never delete a test unless both the exact `test_id` and `test_type` are known.
 - Never fabricate type-specific fields such as `url`, `server`, `domain`, `prefix`, or `target_agent_id`.
 - If the user asks for a partial update but the current test details are unclear, inspect the test first instead of guessing.
+- If the user wants to update an `agent-to-agent` test, explain that the current MCP tool does not support that update path and offer delete-and-recreate guidance instead.
 - If multiple tests match a name or target, stop and ask the user to choose.
 - Keep sample transaction scripts minimal and point to [reference.md](reference.md) for the required async structure.
 - Keep API test payloads minimal and readable; do not invent unsupported step-builder features beyond the MCP schema.
