@@ -1,0 +1,3 @@
+interface:
+  display_name: "ThousandEyes Alert Rule Management"
+  short_description: "Create, update, and delete ThousandEyes alert rules safely"
