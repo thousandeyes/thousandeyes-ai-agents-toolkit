@@ -53,6 +53,16 @@ Load [reference.md](reference.md) for parsing rules, identifier extraction, and 
 5. Recover `accountId`, `testId`, `agentId`, and `executionTime`.
 6. If multiple Observability Platforms produce ThousandEyes identifiers, compare them. Treat matching values as confirmation and call out disagreements explicitly.
 
+**Inline parsing example** — given a raw `tracestate`:
+
+```
+vendor-a=foo,te=app.thousandeyes.com%2Fnetwork-app-synthetics%2Fviews%2F%3F__a%3D102374%26testId%3D562934%26agentId%3D2334%26startTime%3D1775723400,vendor-b=bar
+```
+
+1. Split on commas → select the `te=` entry.
+2. URL-decode → `app.thousandeyes.com/network-app-synthetics/views/?__a=102374&testId=562934&agentId=2334&startTime=1775723400`
+3. Parse query parameters → `accountId=102374`, `testId=562934`, `agentId=2334`, `executionTime=1775723400`
+
 ### 4) Query ThousandEyes
 
 1. Use the recovered `accountId` when the ThousandEyes MCP tool supports account scoping.
@@ -78,9 +88,7 @@ Use the templates in [examples.md](examples.md) when the user wants a structured
 
 ## Guardrails
 
-- Do not skip other Observability Platforms after the first successful trace lookup.
 - If `tracestate` or `w3c.tracestate` is absent after inspecting the full trace payload, stop and say that no usable ThousandEyes trace linkage was found.
-- If the ThousandEyes payload is still undecoded after extraction (for example it still contains `%3D`), stop and say that it must be URL-decoded before query parsing.
 - Do not invent missing ThousandEyes identifiers. If `testId`, `agentId`, or `startTime` is absent after decoding, stop and say what is missing.
 - Do not claim an exact ThousandEyes round unless the time and agent match are explicit or the selection rule is stated.
 - Do not run destructive write actions in external systems without user confirmation.
