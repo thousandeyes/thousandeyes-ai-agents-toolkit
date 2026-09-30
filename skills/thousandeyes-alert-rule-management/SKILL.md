@@ -1,6 +1,6 @@
 ---
 name: thousandeyes-alert-rule-management
-description: List, inspect, create, update, or delete ThousandEyes alert rules with MCP tools. Use when a user wants help managing alert rules or inspecting Adaptive Alert Insights for the currently documented write domains, Network & App Synthetics and Routing, and the session exposes `list_alert_rules`, `get_alert_rule`, `create_alert_rule`, `update_alert_rule`, or `delete_alert_rule`.
+description: List, inspect, create, update, or delete ThousandEyes alert rules with MCP tools. Use when a user wants help managing alert rules for the currently documented write domains, Network & App Synthetics and Routing, and the session exposes `list_alert_rules`, `get_alert_rule`, `create_alert_rule`, `update_alert_rule`, or `delete_alert_rule`.
 ---
 # ThousandEyes Alert Rule Management
 
@@ -13,7 +13,6 @@ Use this skill to manage ThousandEyes alert rules through the available MCP read
 - A user wants to create a new ThousandEyes alert rule
 - A user wants to update an existing alert rule
 - A user wants to delete an existing alert rule
-- A user wants to find or inspect alert rules with Adaptive Alert Insights
 - A user needs help translating ThousandEyes alert-rule UI concepts into MCP tool arguments
 - A user needs help writing or validating an alert `expression`
 
@@ -30,7 +29,6 @@ Use this skill to manage ThousandEyes alert rules through the available MCP read
 9. If `rounds_violating_mode=auto`, prefer an explicit `sensitivity_level`.
 10. Use the expression guidance in [reference.md](reference.md) when building or reviewing `expression`.
 11. Summarize the exact payload you plan to send before execution, then summarize the result after execution.
-12. Treat Adaptive Alert Insights as read-only. Use alert-rule read tools to find and explain recommendations, but never use `update_alert_rule` to apply, dismiss, or reject one. Direct the user to the ThousandEyes UI instead.
 
 ## Inputs To Gather
 
@@ -58,20 +56,6 @@ Load [reference.md](reference.md) for the docs-to-tool mapping and expression ru
 2. Use `get_alert_rule` when the user already has a `rule_id` or once `list_alert_rules` identified the likely rule.
 3. Prefer `get_alert_rule` over `list_alert_rules` when you need the fullest current rule state before `update_alert_rule`.
 4. If the session lacks the relevant read tools, say so and gather the missing identifiers or required fields from the user.
-
-#### Adaptive Alert Insight discovery
-
-1. To find rules with an active recommendation, use `list_alert_rules` with `has_optimization=true`. Do not request confidence as a list filter.
-2. Interpret list results exactly:
-   - `hasOptimization: true` means an active recommendation is confirmed.
-   - `hasOptimization: false` means no active recommendation is confirmed.
-   - a missing `hasOptimization` means recommendation availability is undetermined, not absent.
-3. Use `get_alert_rule` to inspect a recommendation for one rule or to compare recommendation confidence:
-   - an `optimization` object means an active recommendation exists;
-   - `optimization: null` means a completed lookup confirmed that none exists;
-   - an omitted `optimization` means recommendation data is unavailable or undetermined.
-4. If a filtered lookup reports that optimization data is unavailable, report that state directly. Never turn it into an empty result, an unfiltered list, or "no recommendations found."
-5. Explain the recommendation without converting it into an `update_alert_rule` payload. Applying, dismissing, and rejecting Adaptive Alert Insights are ThousandEyes UI actions. Use only a UI link returned with the recommendation; never construct one from a rule ID or remembered URL pattern.
 
 ### 3) Normalize the desired rule
 
@@ -131,9 +115,6 @@ Always return:
 ## Guardrails
 
 - Never run `create_alert_rule`, `update_alert_rule`, or `delete_alert_rule` without explicit user confirmation.
-- Never use `update_alert_rule` to apply, dismiss, or reject an Adaptive Alert Insight, even with confirmation. Keep the recommendation workflow read-only and direct the user to the ThousandEyes UI.
-- Never report missing or unavailable recommendation data as confirmation that no recommendation exists.
-- Never construct an Adaptive Alert Insight UI link; use only a link returned with the recommendation.
 - Prefer `get_alert_rule` before `update_alert_rule` when the user does not already know the required core fields.
 - Never claim a UI feature is supported unless the MCP tool schema exposes it.
 - Never fabricate a partial update payload for `update_alert_rule`; it still needs the required core fields.
