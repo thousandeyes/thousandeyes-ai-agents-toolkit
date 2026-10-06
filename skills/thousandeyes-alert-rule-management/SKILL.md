@@ -1,6 +1,6 @@
 ---
 name: thousandeyes-alert-rule-management
-description: List, inspect, create, update, or delete ThousandEyes alert rules with MCP tools. Use when a user wants help managing alert rules for the currently documented write domains, Network & App Synthetics and Routing, and the session exposes `list_alert_rules`, `get_alert_rule`, `create_alert_rule`, `update_alert_rule`, or `delete_alert_rule`.
+description: List, inspect, create, update, or delete ThousandEyes alert rules with MCP tools. Use for an ordinary update when no Adaptive Alert Insight applies, and when a rule has an active optimization that must stay a read-only UI handoff instead of an update_alert_rule apply. Write domains remain Network & App Synthetics and Routing when the session exposes the alert-rule tools.
 ---
 # ThousandEyes Alert Rule Management
 
@@ -11,7 +11,8 @@ Use this skill to manage ThousandEyes alert rules through the available MCP read
 - A user wants to list existing ThousandEyes alert rules
 - A user wants to inspect one ThousandEyes alert rule by ID
 - A user wants to create a new ThousandEyes alert rule
-- A user wants to update an existing alert rule
+- A user wants to update an existing alert rule that has no active Adaptive Alert Insight
+- A user wants to apply, dismiss, or reject an Adaptive Alert Insight on a rule
 - A user wants to delete an existing alert rule
 - A user needs help translating ThousandEyes alert-rule UI concepts into MCP tool arguments
 - A user needs help writing or validating an alert `expression`
@@ -56,6 +57,16 @@ Load [reference.md](reference.md) for the docs-to-tool mapping and expression ru
 2. Use `get_alert_rule` when the user already has a `rule_id` or once `list_alert_rules` identified the likely rule.
 3. Prefer `get_alert_rule` over `list_alert_rules` when you need the fullest current rule state before `update_alert_rule`.
 4. If the session lacks the relevant read tools, say so and gather the missing identifiers or required fields from the user.
+
+### Update workflows
+
+Before `update_alert_rule`, read the current rule and choose one path. These paths are separate from evaluation rounds and from `rounds_violating_mode`.
+
+**No active optimization.** The detail `optimization` is explicit null, or a list row has `hasOptimization: false`, and the user is changing ordinary rule fields. Continue with the confirmed update below. Send the required core fields. Do not invent an optimization payload or switch detection mode because an insight might exist.
+
+**Active optimization.** The detail includes an `optimization` object, or a list row has `hasOptimization: true`, and the user wants to apply, dismiss, or reject that recommendation or change the rule because of it. Do not call `update_alert_rule`, `create_alert_rule`, or `delete_alert_rule` for that recommendation. Explain the recommendation and send the user to the authorized ThousandEyes UI link returned with it (`optimization.uiUrl` only). Never construct a URL from a rule id. Say that no recommendation or rule was changed.
+
+**Unavailable optimization data.** `optimization` or `hasOptimization` is omitted. That is not confirmation that no recommendation exists. Do not apply, dismiss, or reject a recommendation. An ordinary field change the user explicitly requested, and that is not an insight action, may continue on the confirmed update path.
 
 ### 3) Normalize the desired rule
 
@@ -115,6 +126,9 @@ Always return:
 ## Guardrails
 
 - Never run `create_alert_rule`, `update_alert_rule`, or `delete_alert_rule` without explicit user confirmation.
+- Never use `update_alert_rule` to apply, dismiss, or reject an Adaptive Alert Insight, even after confirmation.
+- Never treat omitted `hasOptimization` or `optimization` as proof that no recommendation exists.
+- Never construct an Adaptive Alert Insight UI link. Use only `optimization.uiUrl` from the tool response.
 - Prefer `get_alert_rule` before `update_alert_rule` when the user does not already know the required core fields.
 - Never claim a UI feature is supported unless the MCP tool schema exposes it.
 - Never fabricate a partial update payload for `update_alert_rule`; it still needs the required core fields.
